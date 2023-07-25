@@ -18,6 +18,7 @@ This project is an API and installation is not necessary.
 
 ## Usage
 To use this project, you must clone the code, install the packages (npm i), and give the command npm start. This will run the API and you can see it using Insomnia, PostMan or similars. You can also use this code as base to your own social network.
+DEMO: https://drive.google.com/file/d/1GAKGJfnoCIIV_sOT1egCeD5n8-Q2tieV/view
 
 ## Credits
 This project was created as a challenge to Tecnologico de Monterrey's bootcamp.
