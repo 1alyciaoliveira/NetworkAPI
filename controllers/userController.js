@@ -1,4 +1,5 @@
-import User from "../models/User.js";
+import User from "../models/User";
+import Thought from "../models/Thoughts";
 
 export const getAllUsers = async (req, res, next) => {
     try {
@@ -56,6 +57,9 @@ export const deleteUser = async (req, res, next) => {
         if (!deletedUser) {
             return res.status(404).json({ message: 'No user with that ID' })
         }
+
+        await Thought.deleteMany({ userId: deletedUser._id });
+
         res.json(deletedUser);
     } catch (err) {
         console.log(err);
