@@ -53,10 +53,38 @@ export const updateThought = async (req, res, next) => {
 };
 
 export const deleteThought = async (req, res, next) => {
-    const { thoughtId } = req.params;
+    const { thoughtId } = req.params.thoughtId;
     try {
         const deletedThought = await Thought.findByIdAndDelete(thoughtId);
         return res.json(deletedThought);
+    } catch (err) {
+        console.log(err);
+        res.status(500).json(err);
+    }
+};
+
+export const addReaction = async (req, res, next) => {
+    try {
+        const newReaction = await Thought.findByIdAndUpdate(
+            req.params.thoughtId,
+            { $push: { reactions: req.body } },
+            { new: true }
+        );
+        return res.json(newReaction);
+    } catch (err) {
+        console.log(err);
+        res.status(500).json(err);    
+    }
+};
+
+export const deleteReaction = async (req, res, next) => {
+    try {
+        const deletedReaction = await Thought.findByIdAndUpdate(
+            req.params.thoughtId,
+            { $pull: { reactions: { reactionId: req.params.reactionId } } },
+            { new: true }
+        );
+        return res.json(deletedReaction);
     } catch (err) {
         console.log(err);
         res.status(500).json(err);
