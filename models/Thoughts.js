@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import moment from "moment";
 import Reaction from "./Reaction";
+import User from "./User";
 
 const Schema = mongoose.Schema;
 
@@ -21,6 +22,11 @@ const thoughtsSchema = new Schema(
         },
         username: {
             type: String,
+            required: true,
+        },
+        userId: {
+            type: Schema.Types.ObjectId,
+            ref: "User",
             required: true,
         },
         reactions: [Reaction],

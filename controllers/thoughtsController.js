@@ -1,4 +1,5 @@
 import Thought from "../models/Thoughts.js";
+import User from "../models/User.js";
 
 
 export const getAllThoughts = async (req, res, next) => {
@@ -11,13 +12,22 @@ export const getAllThoughts = async (req, res, next) => {
 };
 
 export const createThought = async (req, res, next) => {
-    const { username, thoughtText } = req.body;
+    const { username, thoughtText, userId } = req.body;
     const thought = new Thought({
         username,
         thoughtText,
+        userId,
     });
     try {
         const savedThought = await thought.save();
+
+        const user = await User.findById(userId);
+        if(!user) {
+            return res.status(404).json({ message: 'No user with that ID' });
+        }
+        user.thoughts.push(savedThought._id);
+        await user.save();
+
         return res.json(savedThought);
     } catch (err) {
         console.log(err);
@@ -84,7 +94,7 @@ export const deleteReaction = async (req, res, next) => {
             { $pull: { reactions: { reactionId: req.params.reactionId } } },
             { new: true }
         );
-        return res.json(deletedReaction);
+        return res.json({message: 'Reaction deleted'});
     } catch (err) {
         console.log(err);
         res.status(500).json(err);

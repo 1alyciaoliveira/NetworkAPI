@@ -91,7 +91,7 @@ export const removeFriend = async (req, res, next) => {
         if (!removedFriend) {
             return res.status(404).json({ message: 'No user with that ID' })
         }
-        res.json(removedFriend);
+        res.json({message: 'Friend removed'});
     } catch (err) {
         console.log(err);
         res.status(500).json(err);
