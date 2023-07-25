@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import moment from "moment";
-import User from "./User";
+import Reaction from "./Reaction";
 
 const Schema = mongoose.Schema;
 
