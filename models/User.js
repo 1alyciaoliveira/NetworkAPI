@@ -14,15 +14,16 @@ const userSchema = new Schema({
         required: true,
         unique: true,
         match: [/.+@.+\..+/, 'must match an email address!'],
-    //validation
     },
     thoughts: [{
         type: Schema.Types.ObjectId,
         ref: "Thought",
     }],
-    },
-    //friends: [friendsSchema],
-
+    friends: [{
+        type: Schema.Types.ObjectId,
+        ref: "User",
+    }],
+},
     {
         toJSON: {
             virtuals: true,
@@ -30,6 +31,11 @@ const userSchema = new Schema({
         id: false,
     } 
 );
+
+userSchema.virtual('friendCount').get(function() {
+    return this.friends.length;
+});
+
 
 export default mongoose.model("User", userSchema);
 

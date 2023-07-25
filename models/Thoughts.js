@@ -23,7 +23,7 @@ const thoughtsSchema = new Schema(
             type: String,
             required: true,
         },
-        //reactions: [reactionSchema],
+        reactions: [Reaction],
     },
     {
         toJSON: {
@@ -32,5 +32,9 @@ const thoughtsSchema = new Schema(
         id: false,
     } 
 );
+
+thoughtsSchema.virtual('reactionCount').get(function() {
+    return this.reactions.length;
+});
 
 export default mongoose.model("Thought", thoughtsSchema);
